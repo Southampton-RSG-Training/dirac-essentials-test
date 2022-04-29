@@ -61,6 +61,10 @@ instructor_post_survey: "https://carpentries.typeform.com/to/cjJ9UP#slug="
 # Start time in minutes (0 to be clock-independent, 540 to show a start at 09:00 am).
 start_time: 0
 
+# order is critical
+setup_docs:
+  - text_editor.md
+
 # Specify that things in the episodes collection should be output.
 collections:
   episodes:
@@ -100,3 +104,6 @@ exclude:
 
 # Turn on built-in syntax highlighting.
 highlighter: rouge
+
+# Using the new jekyll remote themes
+remote_theme: carpentries/carpentries-theme

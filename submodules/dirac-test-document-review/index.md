@@ -7,13 +7,7 @@ permalink: index.html  # Is the only page that doesn't follow the pattern /:path
 {% include gh_variables.html %}
 
 <p>This lesson will cover:</p>
-
-<ul>
-  <li>Why software testing is important, how to plan for it, and what types of testing can help.</li>
-  <li>How code editors, Integrated Development Environments and debuggers can help development.</li>
-  <li>Reviewing code for improvement and final acceptance.</li>
-  <li>Why and how to document your code efficiently, and the types of documentation to consider.</li>
-</ul>
+{% include blurb.html %}
 
 > ## Prerequisites
 >
