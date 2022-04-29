@@ -67,7 +67,7 @@ lessons:
   - title: "Principles of Software Engineering"
     gh-name: dirac-software-engineering
     type: episode
-    branch: main
+    branch: pip-example
     order: 4
 
   - title: "Testing, Documenting, and Reviewing Code"
