@@ -96,7 +96,7 @@ jobs:
         run: |
           python bin/make_favicons.py
           python bin/get_schedules.py
-          python bin/clean_setup_md.py
+          python bin/get_setup.py
 
       - name: Deploy the website to gh-pages
         uses: JamesIves/github-pages-deploy-action@4.1.7
