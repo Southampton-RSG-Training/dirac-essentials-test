@@ -49,37 +49,37 @@ lessons:
   - title: "Bash Shell: Using the Command Line"
     gh-name: dirac-bash-command-line
     type: episode
-    branch: gh-pages
+    branch: main
     order: 1
 
   - title: "Bash Shell: Writing Basic Scripts"
     gh-name: dirac-bash-writing-scripts
     type: episode
-    branch: gh-pages
+    branch: main
     order: 2
 
   - title: "Version Control with Git"
     gh-name: dirac-version-control
     type: episode
-    branch: gh-pages
+    branch: main
     order: 3
 
   - title: "Principles of Software Engineering"
     gh-name: dirac-software-engineering
     type: episode
-    branch: gh-pages
+    branch: main
     order: 4
 
   - title: "Testing, Documenting, and Reviewing Code"
     gh-name: dirac-test-document-review
     type: episode
-    branch: gh-pages
+    branch: main
     order: 5
 
   - title: "Principles of Codes Scaling"
     gh-name: dirac-code-scaling
     type: episode
-    branch: gh-pages
+    branch: main
     order: 6
 
 # Specify that things in the episodes collection should be output.
@@ -105,7 +105,7 @@ flavor: "python"
 
 # If the workshop will be a lesson pilot (for a new official lesson or
 # a lesson in The Carpentries Incubator), set pilot to "true".
-pilot: true
+pilot: false
 
 #------------------------------------------------------------
 # Incubator workshop settings (only relevant for workshops teaching a lesson
