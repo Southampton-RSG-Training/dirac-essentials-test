@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 title: "Tracking Changes"
 slug: dirac-version-control-tracking-changes
 teaching: 20

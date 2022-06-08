@@ -1,4 +1,6 @@
 ---
+lesson_title: Bash Shell: Using the Command Line
+lesson_schedule_slug: dirac-bash-command-line-schedule
 title: Writing and reading files
 slug: dirac-bash-command-line-writing-reading-files
 teaching: 30

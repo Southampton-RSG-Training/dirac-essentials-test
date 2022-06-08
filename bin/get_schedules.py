@@ -103,7 +103,7 @@ def get_time_object(time_string):
 
     return time
 
-def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
+def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time, lesson_title):
     """Create a detailed lesson schedule landing page for each lesson.
 
     The schedule is based on a modifed version of syllabus.html to work better
@@ -118,6 +118,8 @@ def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
         The type of lesson.
     start_time: str
         The start time of the lesson.
+    lesson_title: str
+        The title of the lesson.
     """
     file_ext = "md"
     containing_directory = f"collections/_episodes/{lesson_name}-lesson"
@@ -128,6 +130,8 @@ def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
         filepath.rename(f"{containing_directory}/{new_file_name}")
 
     schedule_markdown = textwrap.dedent(f"""---
+    lesson_title: {lesson_title}
+    lesson_schedule_slug: {lesson_name}-schedule
     title: Lesson Schedule
     slug: {lesson_name}-schedule
     layout: schedule
@@ -159,14 +163,20 @@ def create_index_schedules(schedules):
 
     left = ordered_schedules[:n_rows]
     right = ordered_schedules[n_rows:]
-  
-    html = ""
     for i in range(n_rows):
-        html += "<div class=\"row\">"
+        left[i]["schedule"] = left[i]["schedule"].replace("col-md-6", f"col-md-6 order-sm-first")
+        if i < len(right):
+            right[i]["schedule"] = right[i]["schedule"].replace("col-md-6", f"col-md-6 order-sm-last")
+
+    html = ""
+    html += "<div class=\"container\">"
+    html += "<div class=\"row\">"
+    for i in range(n_rows):
         html += left[i]["schedule"]
         if i < len(right):
             html += right[i]["schedule"]
-        html += "</div>"
+    html += "</div>"
+    html += "</div>"
 
     with open("_includes/rsg/schedule.html", "w") as fp:
         fp.write(bs(html, "html.parser").prettify())
@@ -216,7 +226,7 @@ def main():
                 raise ValueError(f"gh-name, title, date, and start-time are required for workshop")
             if website_kind == 'course':
                 raise ValueError(f"lesson_name, lesson_title, lesson_order are required for course")
-            
+
 
         # Since we allow multiple dates and start times per lesson, we need to be
         # able to iterate over even single values so turn into list. When done,
@@ -242,10 +252,10 @@ def main():
         if website_kind == 'workshop':
             if len(all_schedules) != len(lesson_dates):
                 raise ValueError(f"There are not the same number of lesson dates for the number of schedules for"
-                                  " {lesson_name} lesson")
+                                 " {lesson_name} lesson")
             if len(all_schedules) != len(lesson_starts):
                 raise ValueError(f"There are not the same number of lesson start times for the number of schedules for"
-                                  " {lesson_name} lesson")
+                                 " {lesson_name} lesson")
 
             # Loop over each schedule table, if the lesson has multiple schedules
 
@@ -294,7 +304,7 @@ def main():
 
             start_time = get_time_object(lesson_starts[0])
             start_time_minutes = start_time.hour * 60 + start_time.minute
-            create_detailed_lesson_schedules(lesson_name, lesson_type, start_time_minutes)
+            create_detailed_lesson_schedules(lesson_name, lesson_type, start_time_minutes, lesson_title)
         elif website_kind == 'course':
             path = Path(f"_includes/rsg/{lesson_name}-lesson/blurb.html")
 
@@ -313,7 +323,7 @@ def main():
 
             lesson_schedules.append({"order_on": lesson_order, "schedule": table})
 
-            create_detailed_lesson_schedules(lesson_name, lesson_type, 0)
+            create_detailed_lesson_schedules(lesson_name, lesson_type, 0, lesson_title)
             # make some untimed schedules
 
     create_index_schedules(lesson_schedules)

@@ -1,4 +1,6 @@
 ---
+lesson_title: Principles of Software Engineering
+lesson_schedule_slug: dirac-software-engineering-schedule
 layout: reference
 ---
 

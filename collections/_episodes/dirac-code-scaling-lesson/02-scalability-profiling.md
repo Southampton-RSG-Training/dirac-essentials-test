@@ -1,4 +1,6 @@
 ---
+lesson_title: Principles of Codes Scaling
+lesson_schedule_slug: dirac-code-scaling-schedule
 title: "Scalability Profiling"
 slug: dirac-code-scaling-scalability-profiling
 teaching: 0

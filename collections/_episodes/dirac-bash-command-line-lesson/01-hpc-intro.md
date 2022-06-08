@@ -1,4 +1,6 @@
 ---
+lesson_title: Bash Shell: Using the Command Line
+lesson_schedule_slug: dirac-bash-command-line-schedule
 title: "Why Use a Cluster?"
 slug: dirac-bash-command-line-why-use-cluster
 teaching: 25

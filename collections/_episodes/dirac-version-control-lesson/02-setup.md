@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 title: "Setting Up"
 slug: dirac-version-control-setting-up-git
 teaching: 5

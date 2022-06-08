@@ -1,4 +1,6 @@
 ---
+lesson_title: Bash Shell: Using the Command Line
+lesson_schedule_slug: dirac-bash-command-line-schedule
 title: "Connecting to the remote HPC system"
 slug: dirac-bash-command-line-connecting-remote-hpc-system
 teaching: 25

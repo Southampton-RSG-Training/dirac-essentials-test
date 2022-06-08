@@ -1,4 +1,6 @@
 ---
+lesson_title: Principles of Codes Scaling
+lesson_schedule_slug: dirac-code-scaling-schedule
 title: "Understanding Code Scalability"
 slug: dirac-code-scaling-understanding-code-scalability
 teaching: 0

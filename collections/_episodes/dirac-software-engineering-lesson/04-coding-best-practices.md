@@ -1,4 +1,6 @@
 ---
+lesson_title: Principles of Software Engineering
+lesson_schedule_slug: dirac-software-engineering-schedule
 title: "Best Practices in Writing Code"
 slug: dirac-software-engineering-best-practices-writing-code
 teaching: 0

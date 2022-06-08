@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 layout: reference
 ---
 

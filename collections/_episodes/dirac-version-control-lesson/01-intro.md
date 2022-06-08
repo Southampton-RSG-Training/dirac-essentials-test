@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 title: "What is Version Control"
 colour: "#fcffcc"
 slug: dirac-version-control-what-is-version-control

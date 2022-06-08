@@ -1,4 +1,6 @@
 ---
+lesson_title: Principles of Codes Scaling
+lesson_schedule_slug: dirac-code-scaling-schedule
 layout: reference
 ---
 

@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 title: "Exploring History"
 slug: dirac-version-control-exploring-history
 teaching: 10

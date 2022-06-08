@@ -2,10 +2,6 @@
 	path = submodules/dirac-bash-command-line
 	url = https://github.com/Southampton-RSG-Training/dirac-bash-command-line.git
 	branch = main
-[submodule "submodules/dirac-bash-writing-scripts"]
-	path = submodules/dirac-bash-writing-scripts
-	url = https://github.com/Southampton-RSG-Training/dirac-bash-writing-scripts.git
-	branch = main
 [submodule "submodules/dirac-version-control"]
 	path = submodules/dirac-version-control
 	url = https://github.com/Southampton-RSG-Training/dirac-version-control.git

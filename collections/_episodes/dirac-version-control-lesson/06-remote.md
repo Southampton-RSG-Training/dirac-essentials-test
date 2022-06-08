@@ -1,4 +1,6 @@
 ---
+lesson_title: Version Control with Git
+lesson_schedule_slug: dirac-version-control-schedule
 title: "Remote Repositories"
 slug: dirac-version-control-remote
 teaching: 10

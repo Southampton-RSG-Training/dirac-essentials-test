@@ -1,4 +1,6 @@
 ---
+lesson_title: Testing, Documenting, and Reviewing Code
+lesson_schedule_slug: dirac-test-document-review-schedule
 title: "Test Strategy, Planning, and Running Tests"
 slug: dirac-test-document-review-test-strategy-planning
 teaching: 0

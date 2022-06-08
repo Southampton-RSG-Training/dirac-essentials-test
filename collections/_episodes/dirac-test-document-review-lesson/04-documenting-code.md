@@ -1,4 +1,6 @@
 ---
+lesson_title: Testing, Documenting, and Reviewing Code
+lesson_schedule_slug: dirac-test-document-review-schedule
 title: "Documenting Code"
 slug: dirac-test-document-review-documenting-code
 teaching: 0
