@@ -99,7 +99,7 @@ For much more information on lists, see https://docs.python.org/3/tutorial/datas
 index = {
     "python": 1,
     "c++": 5,
-    "fortran: 5,
+    "fortran": 5,
 }
 
 index["java"] = 12
@@ -155,6 +155,7 @@ Number was greater than 50
 In the example above, because `number` is greater than 50, the **condition** evaluates as `True` and the **block** of code within the `if` is executed.
 Code blocks are introduced in Python with a colon (`:`), which we see in the example above, but we'll also see in a couple of other contexts soon.
 If the condition doesn't evaluate as `True` (i.e. it evaluates as `False`), the block of code is skipped.
+The expression `number > 50` evaluates to `True` if the value of `number` is less than 50, otherwise it evaluates to `False`.
 
 We can also add more possible outcomes to the branching using `elif` (short for "else if") and `else`.
 With `elif` we provide another condition and the block of code we provide executes if all of the previous conditions evaluate as `False`, but this one evaluates as `True`.
@@ -178,6 +179,9 @@ else:
 Less than 100
 ~~~
 {: .output}
+
+In this example we see the `==` operator, used to check for equality.
+We use this instead of `=` because `=` is already used for assignment to a variable, so most languages use `==` to check for equality instead.
 
 Loops are another important construct, which in Python use the keyword `for`:
 
@@ -254,95 +258,5 @@ print(pi)
 3.138856
 ~~~
 {: .output}
-
-## Functions
-
-We've actually now got everything we need to write any program, but if we stopped here we'd quickly find that larger programs become unmanageable.
-What we're missing is a way of structuring our code, so that we can separate out specific parts with specific functionality.
-The first and most important tool for doing this are **functions**.
-
-Much like in mathematics, functions represent an operation which can be applied to some data, to receive some other data as output.
-
-~~~ python
-def add_one(x):
-    """Add one to a number."""
-    return x + 1
-
-print(add_one(3))
-~~~
-{: .language-python}
-
-~~~
-4
-~~~
-{: .output}
-
-In the example above, we define a function `add_one` which adds one to a number.
-To define a function, we need to start with the `def` keyword, then the function name, the function **arguments** in parentheses and the colon to start a new block.
-Within the function's code block we can do anything we could outside of a function, but in order to get any data back out of the function we need to `return` it.
-
-The arguments of a function are the values it takes as input - when we **call** the function inside the `print()`, we provide the values of any required parameters, in this case just `x`.
-The value returned by the function is then passed on to `print()`, just as it would be if we'd put the value there directly.
-
-The last component of the function definition above is the **docstring**.
-Docstrings aren't a requirement, but can make it much easier to understand what your code is doing, especially if it's complex or you haven't looked at it for a while.
-A docstring needs to be the first thing inside a function's code block and should be enclosed within triple double quotes (i.e. `"""`).
-
-> ## A Function for Pi
->
-> Take our existing example for the Monte Carlo approximation of pi and convert it into a function.
->
-> > ## Solution
-> > 
-> > ~~~ python
-> > import random
-> >
-> > def approximate_pi(num_points=1000000):
-> >     """Monte-carlo approximation of pi by counting points within a circle."""
-> >     inside = 0
-> > 
-> >     for i in range(num_points):
-> >         x = random.uniform(-1, 1)
-> >         y = random.uniform(-1, 1)
-> > 
-> >         r2 = x**2 + y**2
-> > 
-> >         if r2 <= 1:
-> >             inside += 1
-> > 
-> >     return = 4 * inside / num_points
-> > 
-> > pi = approximate_pi()
-> > print(pi)
-> > ~~~
-> > {: .language-python}
-> > 
-> > ~~~
-> > 3.142464
-> > ~~~
-> > {: .output}
-> >
-> > In this example solution, we've provided a default value for the number of points, meaning that when someone calls the function they may choose not to specify how many points, in which case the default value will be used.
-> {: .solution}
-{: .challenge}
-
-> ## Sum of Squares
-> 
-> Write a function which accepts an integer and returns the sum of the squares of integers up to **and including** this number.
-> 
-> > ## Solution
-> > 
-> > ~~~ python
-> > def sum_of_squares(limit):
-> >     total = 0
-> >     for i in range(limit + 1):
-> >         total += i * i
-> > 
-> >     return total
-> > ~~~
-> > {: .language-python}
-> {: .solution}
-{: .challenge}
-
 
 {% include links.md %}

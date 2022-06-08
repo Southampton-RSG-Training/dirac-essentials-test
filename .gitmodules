@@ -9,7 +9,7 @@
 [submodule "submodules/dirac-software-engineering"]
 	path = submodules/dirac-software-engineering
 	url = https://github.com/Southampton-RSG-Training/dirac-software-engineering.git
-	branch = pip-example
+	branch = main
 [submodule "submodules/dirac-test-document-review"]
 	path = submodules/dirac-test-document-review
 	url = https://github.com/Southampton-RSG-Training/dirac-test-document-review.git

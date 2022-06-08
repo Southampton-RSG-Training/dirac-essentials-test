@@ -289,95 +289,147 @@ Each of these has a set of properties which we need to know about in order for o
 So with Object Oriented Programming, we'll have some **object** structure which represents an atom and all of its properties, another structure to represent a molecule, and a relationship between the two (a molecule contains atoms).
 This structure also provides a way for us to associate code with an object, representing any **behaviours** it may have.
 
-As an example here, let's imagine some software we might need to analyse the results of a clinical trial.
-For each patient, we might need to keep track of:
+The main tools of Object Oriented Programming are **classes** and the relationships between them.
 
-- Their name
-- Their dosage
-- Some general health measurements
-- Measurements of the trial outcome indicator e.g. inflammation
+## Relationships Between Classes
 
-Using the data structures we've seen so far, we might implement this using a dictionary for each patient - so all of our patients would be represented in a list of dictionaries:
+Classes give us a tool for grouping data and behaviour related to a single conceptual object.
+The next step we need to take is to describe the relationships between the concepts in our code.
 
-~~~ python
-alice = {
-    "name": "Alice",
-    "dosage_mg": 40,
-    "weight_kg": 65,
-    "measurements": [
-        10, 10, 6, 4, 2, 1, 0
-    ],
-}
+There are two fundamental types of relationship between objects which we need to be able to describe:
 
-bob = {
-    "name": "Bob",
-    "dosage_mg": 0,
-    "weight_kg": 75,
-    "measurements": [
-        10, 8, 8, 9, 8, 9, 9
-    ],
-}
-~~~
-{: .language-python}
+1. Ownership - x **has a** y - this is **composition**
+2. Identity - x **is a** y - this is **inheritance**
 
-However, having to replicate the structure like this each time is error prone and overly verbose.
-By using the Object Oriented paradigm, we have a better way to structure this:
+### Composition
+
+You should hopefully remember the term **composition** from the section on functions, where we used composition of functions to reduce code duplication.
+That time, we used a function which converted temperatures in Celsius to Kelvin as a **component** of another function which converted temperatures in Fahrenheit to Kelvin.
+
+In the same way, in object oriented programming, we can make things components of other things.
+
+We often use composition where we can say 'x *has a* y' - to use a clinical trial as an example again, we might want to say that a doctor *has* patients or that a patient *has* observations.
 
 ~~~ python
+class Observation:
+    def __init__(self, day, value):
+        self.day = day
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
 class Patient:
+    """A patient in a clinical trial."""
     def __init__(self, name, dosage_mg, weight_kg):
         self.name = name
         self.dosage_mg = dosage_mg
         self.weight_kg = weight_kg
+        self.observations = []
 
-        self.measurements = []
+    def add_observation(self, value, day):
+        new_observation = Observation(day, value)
+        self.observations.append(new_observation)
+        return new_observation
 
-    def add_measurement(self, value):
-        self.measurements.append(value)
+    def __str__(self):
+        return self.name
 
-alice = Patient("Alice", 40, 65)
-alice.add_measurement(10)
-alice.add_measurement(8)
 
-bob = Patient("Bob", 0, 75)
-bob.add_measurement(10)
-bob.add_measurement(8)
+alice = Patient('Alice', 40, 65)
+obs = alice.add_observation(3, 1)
+
+print(obs)
 ~~~
 {: .language-python}
 
-In this second example, we define a **class** to represent our patients.
-A class is a template for a piece of structured data, which may optionally provide some **behaviour** by implementing additional functions, like our `add_measurement` function.
+~~~
+3
+~~~
+{: .output}
 
-We can then create an **instance** of the class by using similar syntax to calling a function.
-When we create instances for Alice and Bob, we provide the values to the parameters of the `__init__` method.
+Now we're using a composition of two custom classes to describe the relationship between two types of entity in the system that we're modelling.
 
-When a function belongs to a class like this, we often refer to it as a **method**.
-Normal methods will have `self` as their first parameter, but notice that we don't ever provide a value for this when we call the `__init__` method (implicitly) or the `add_measurement` method.
-This is because it gets filled in for us, to refer to the instance of the class that we're operating on.
-In the case of the line `alice.add_measurement(10)`, the value of the `self` parameter, will be the class instance `alice`.
+### Inheritance
 
-> ## Adding a Method
-> 
-> Something we might need to calculate during our clinical trial is the dosage per body mass, often reported in units of milligrams per kilogram (mg/kg).
-> 
-> Add a new method to our patient class which will calculate the measure for us.
-> 
-> > ## Solution
-> > ~~~ python
-> > class Patient:
-> >     def __init__(self, name, dosage_mg, weight_kg):
-> >         self.name = name
-> >         self.dosage_mg = dosage_mg
-> >         self.weight_kg = weight_kg
-> > 
-> >         self.measurements = []
-> > 
-> >     def add_measurement(self, value):
-> >         self.measurements.append(value)
-> > 
-> >     def dosage_per_kg(self):
-> >         return self.dosage_mg / self.weight_kg
-> > ~~~
-> > {: .language-python}
-> {: .solution}
+The other type of relationship used in object oriented programming is **inheritance**.
+Inheritance is about data and behaviour shared by classes, because they have some shared identity - 'x *is a* y'.
+If class `Y` inherits from (*is a*) class `X`, we say that `X` is the **superclass** or **parent class** of `Y`, or `Y` is a **subclass** of `X`.
+
+If we want to extend the previous example to also manage people who aren't patients we can add another class `Person`.
+But `Person` will share some data and behaviour with `Patient` - in this case both have a name and show that name when you print them.
+Since we expect all patients to be people (hopefully!), it makes sense to implement the behaviour in `Person` and then reuse it in `Patient`.
+
+To write our class in Python, we used the `class` keyword, the name of the class, and then a block of the functions that belong to it.
+If the class **inherits** from another class, we include the parent class name in brackets.
+
+~~~ python
+# file: inflammation/models.py
+
+class Observation:
+    def __init__(self, day, value):
+        self.day = day
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+class Patient(Person):
+    """A patient in an inflammation study."""
+    def __init__(self, name, dosage_mg, weight_kg):
+        self.name = name
+        self.dosage_mg = dosage_mg
+        self.weight_kg = weight_kg
+        self.observations = []
+
+    def add_observation(self, value, day):
+        new_observation = Observation(day, value)
+        self.observations.append(new_observation)
+        return new_observation
+
+    def __str__(self):
+        return self.name
+
+alice = Patient('Alice', 40, 65)
+print(alice)
+
+obs = alice.add_observation(3)
+print(obs)
+
+bob = Person('Bob')
+print(bob)
+
+obs = bob.add_observation(4)
+print(obs)
+~~~
+{: .language-python}
+
+~~~
+Alice
+3
+Bob
+AttributeError: 'Person' object has no attribute 'add_observation'
+~~~
+{: .output}
+
+As expected, an error is thrown because we cannot add an observation to `bob`, who is a Person but not a Patient.
+
+We see in the example above that to say that a class inherits from another, we put the **parent class** (or **superclass**) in brackets after the name of the **subclass**.
+
+There's something else we need to add as well - Python doesn't automatically call the `__init__` method on the parent class if we provide a new `__init__` for our subclass, so we'll need to call it ourselves.
+This makes sure that everything that needs to be initialised on the parent class has been, before we need to use it.
+If we don't define a new `__init__` method for our subclass, Python will look for one on the parent class and use it automatically.
+This is true of all methods - if we call a method which doesn't exist directly on our class, Python will search for it among the parent classes.
+The order in which it does this search is known as the **method resolution order** - a little more on this in the Multiple Inheritance callout below.
+
+The line `super().__init__(name)` gets the parent class, then calls the `__init__` method, providing the `name` variable that `Person.__init__` requires.
+This is quite a common pattern, particularly for `__init__` methods, where we need to make sure an object is initialised as a valid `X`, before we can initialise it as a valid `Y` - e.g. a valid `Person` must have a name, before we can properly initialise a `Patient` model with their inflammation data
+
 {: .challenge}
