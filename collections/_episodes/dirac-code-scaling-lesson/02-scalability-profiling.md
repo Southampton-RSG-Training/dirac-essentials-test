@@ -40,9 +40,15 @@ In the following example we have a simple piece of code that calculates π. When
 > Our π program uses the popular [Message Passing Interface (MPI)](https://en.wikipedia.org/wiki/Message_Passing_Interface) standard to enable communication between each of the parallel portions of code, running on separate CPU cores. It's been around since the mid-1990's and is widely available on many operating systems. MPI also is designed to make use of multiple cores on a variety of platforms, from a multi-core laptop to large-scale HPC resources such as those available on DiRAC. There are many available [tutorials](https://hpc-tutorials.llnl.gov/mpi/) on MPI.
 {: .callout}
 
-By using MPI, we can reduce the run time of our code by using more cores, without affecting the results. The speedup shown in the table above was calculated using:
+By using MPI, we can reduce the run time of our code by using more cores, without affecting the results. The speedup shown in the table above was calculated using,
 
 > *Speedup = T<sub>1</sub> / T<sub>n</sub>*
+
+ The speedup efficiency, which measures how efficiently the additional resources are being used, is,
+
+> *Efficiency<sub>n</sub> = Speedup<sub>n</sub> / n*,
+
+which could be as high as 1, but probably will never be in practice.
 
 > ## What Type of Scaling?
 >
@@ -51,112 +57,112 @@ By using MPI, we can reduce the run time of our code by using more cores, withou
 > > ## Solution
 > >
 > > This is an example of strong scaling, as we are keeping the data sample the same but increasing the number of cores used.
-> {: .solution}
+>{: .solution}
+>
 {: .challenge}
 
 When we plot the run time against the number of cores, we see the following graph:
 
 ![Time vs Cores for an implementation of Pi]({{ site.url }}{{ site.baseurl }}/fig/scalability-pi-time-vs-cores.png){: width="650px"}
-<!-- TODO: I think the above figure is using different data, the time for 1 core is < 4 secs, not ~4.2 secs as in the figure -->
 
-## Determining Serial and Parallel Proportions of Code
+So we can see that as the number of cores increases, the run time of our program decreases. This makes sense, since we are splitting the calculation into smaller pieces which are executed at the same time.
 
-We can use [Amdahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law) to give us a theoretical indication of the speedup possible by using more cores when running our code. In order to do this, we need an idea of what proportions of our code are in executed in serial and parallel. It is oftentimes difficult to estimate the proportion of serial code, but we can estimate this by using Amdahl's Law.
+## Amdahl's Law
 
-Assuming:
-> *Time to Complete (T) = Time taken for Serial Portion (S) + Time taken for Parallel Portion (P)*
+If we use *n* processors, we should expect *n* times speedup. But this is rarely, if ever, the case! In a program, there is always some portion of it which *must* be executed in serial (such as initialisation routines, I/O operations and inter-communication) which cannot be parallelised. This limits how much a program can be speeded up, as the program will always take *at least* the length of the serial portion. This is actually known as *Amdahl's Law*, which states that a program's serial parts limit the potential speedup from parallelising the code.
+
+We can think of a program as being operations which *can* and *can't* be parallelised, i.e. the part of the code we can and can't be speeded up. The time taken for a program to finish executing is the sum of the fractions of time spent in the serial and parallel portion of the code,
+
+> *Time to Complete (T) = Fraction of time taken in Serial Portion (F<sub>S</sub>) + Fraction of time taken in Parallel Portion (F<sub>P</sub>)*
 >
-> *T = S + P*
+> *T = F<sub>S</sub> + F<sub>P</sub>*
 
-To help us solve this, we can write the parallel portion P as T - S. This gives us:
+When a program executes in parallel, the parallel portion of the code is split between the available cores. But since the serial portion is not split in this way, the time to complete is therefore,
 
-> *T = S + ( T - S )*
+> *T<sub>n</sub> = F<sub>S</sub> + F<sub>P</sub> / n*
 
-We will assume, for simplicity, that the time it takes to run the serial portion is constant, and that only the parallel portion of the code is affected when we increase the number of cores in use. Therefore, using 2 cores we can rewrite Amdahl's law as:
+We can see that as the number of cores in uses increases, then the time to complete decreases until it approaches that of the serial portion. The speedup from using more cores is,
 
-> *T<sub>2</sub> = S + ( T<sub>1</sub> - S ) / 2*
+> *Speedup = T<sub>1</sub> / T<sub>n</sub> = ( F<sub>S</sub> + F<sub>P</sub> ) / ( F<sub>S</sub> + F<sub>P</sub> / n )*
 
-And in general, for n cores:
+To simplify the above, we will define the single core execution time as a single unit of time, such that *F<sub>S</sub> + F<sub>P</sub> = 1*.
 
-> *T<sub>n</sub> = S + ( T<sub>1</sub> - S ) / n*
+> *Speedup = 1 / ( F<sub>S</sub> + F<sub>P</sub> / n )*
 
-We can now rearrange this to solve for S, the time taken for the serial portion of our code:
+Again this shows us that as the number of cores increases, the serial portion of the code will dominate the run time as when *n = ∞*,
 
-> *S = ( nT<sub>n</sub> - T<sub>1</sub> ) / (n - 1)*
+> *Max speedup = 1 / F<sub>S</sub>*
+
+## What's the Maximum Speedup?
+
+From the previous section, we know the the maximum speedup achievable is limited to how long a program takes to execute in serial. If we know the portion of time spent in the serial and parallel code, we will theoretically know by how much we can accelerate our program. However, it's not always simple to know the exact value of these fractions. But from Amdahl's law, if we can measure the speedup as a function of number of cores, we can estimate that maximum speed up.
+
+We can rearrange Amdahl's law to estimate the parallel portion *F<sub>P</sub>*,
+
+> *F<sub>P</sub> = n / ( n - 1 ) ( ( T<sub>1</sub> - T<sub>n</sub> ) / T<sub>1</sub> )*
 
 Using the above formula on our example code we get the following results:
 
-| Cores (n) | T<sub>n</sub> | S<sub>n</sub> | P<sub>n</sub> = (T<sub>n</sub> - S<sub>n</sub>) | Serial % | Parallel % |
-|-----------|---------------|---------------|-------------|----------|----------|
-| 1         | 3.99667       | -             | -           | -        | -        |
-| 2         | 2.064242      | 0.131814      | 1.932428    | 6.39     | 93.61    |
-| 4         | 1.075068      | 0.101200      | 0.973867    | 9.41     | 90.59    |
-| 8         | 0.687097      | 0.214300      | 0.472796    | 31.20    | 68.81    |
-| 16        | 0.349366      | 0.106212      | 0.243153    | 30.40    | 69.60    |
-|-----------|---------------|---------------|-------------|----------|----------|
-|           |               |               | **Average** | 19.35    | 80.65    |
+| Cores (n) | T<sub>n</sub> | F<sub>p</sub> | F<sub>s</sub> = 1 - F<sub>p</sub> |
+|-----------|---------------|---------------|-----------------------------------|
+| 1         | 3.99667       | -             | -                                 |
+| 2         | 2.064242      | 0.967019      | 0.0329809                         |
+| 4         | 1.075068      | 0.974678      | 0.0253212                         |
+| 8         | 0.687097      | 0.946380      | 0.0536198                         |
+| 16        | 0.349366      | 0.973424      | 0.0265752                         |
+|-----------|---------------|---------------|-----------------------------------|
+|           | **Average**   | 0.965375      | 0.0346242                         |
+|-----------|---------------|---------------|-----------------------------------|
 
-We now have an estimated percentage for our serial and parallel portion of our code. Ss you can see, as the number of cores we use increases, the percentage of the run time spent in the serial portion of the code increases.
+We now have an estimated percentage for our serial and parallel portion of our code. As you can see, as the number of cores we use increases, the time spent in the serial portion of the code increases.
 
 > ## Differences in Serial Timings
 >
-> You may be wondering why the serial run time seems to vary depending on the run. There are several factors that are impacting our code. Firstly these were run on a working system with other users, so runtime will be affected depending on the load of the system. Throughout DiRAC, it is normal when you run your production code to have exclusive access to the servers, so this will be less of an issue. But if, for example, your code accesses bulk storage then there may be an impact since these are shared resources. As we are using the MPI library in our code, it would be expected that the serial portion will actually increase slightly with the number of cores due to additional MPI overheads. This will have a noticeable impact if you try scaling your code into the thousands of cores.
+> You may be wondering why the serial run time seems to vary depending on the run. There are several factors that are impacting our code. Firstly these were run on a working system with other users, so runtime will be affected depending on the load of the system. Throughout DiRAC, it is normal when you run your code to have exclusive access, so this will be less of an issue. But if, for example, your code accesses bulk storage then there may be an impact since these are shared resources. As we are using the MPI library in our code, it would be expected that the serial portion will actually increase slightly with the number of cores due to additional MPI overheads. This will have a noticeable impact if you try scaling your code into the thousands of cores.
 {: .callout}
 
-## What's the Maximum Speedup?
-<!-- TODO: I'm not sure I understood the above section and this -->
+If we have several values, we can take the average to estimate an upper bound on how much benefit we will get from adding more processors. In our case then, the maximum speedup we can expect is,
 
-We can use these figures to give us the theoretical maximum possible speed up we could achieve:
+> *Max speedup = 1 / F<sub>S</sub> = 1 / ( 1 - F<sub>P</sub> ) = 1 / ( 1 - 0.965375 ) = 29*
 
-> *Speedup = T<sub>1</sub>/T<sub>n</sub>*
+Below is a table of the expected maximum speedup for a given F<sub>P</sub>.
 
-And
-
-> *T<sub>n</sub> = S + (T<sub>1</sub> - S) / n*
-
-For simplicity and when using percentages we normally set *T<sub>1</sub>* to 1. Therefore we will get a speedup relative to 1.
-
-Therefore:
-
-> *Speedup = 1 / T<sub>n</sub>*
->
-> *T<sub>n</sub> = S + ( 1 - S ) / n*
-
-As we increase the number of cores to infinity, then *T<sub>n</sub>* approaches *S*.
-
-> *T<sub>n</sub> = S*
->
-> *Max Speedup = 1 / S*
-
-And in our case:
-
-> *Max Speedup = 1 / 19% => 5*
+| F<sub>P</sub> | Max Speedup |
+|---------------|-------------|
+| 0.0           | 1.00        |
+| 0.1           | 1.11        |
+| 0.2           | 1.25        |
+| 0.3           | 1.43        |
+| 0.4           | 1.67        |
+| 0.5           | 2.00        |
+| 0.6           | 2.50        |
+| 0.7           | 3.33        |
+| 0.8           | 5.00        |
+| 0.9           | 10.00       |
+| 0.95          | 20.00       |
+| 0.99          | 100.00      |
+|---------------|-------------|
 
 > ## Number of Cores vs Expected Speedup
 >
 > Using Amdahl's Law and the percentages of serial and parallel proportions of our example code. Fill In or create a table estimating the expected total speedup and change in speedup when doubling the number of cores, in a table like the following (with the number of cores doubling each time until a total of 4096):
 >
 > | Cores (n) | T<sub>n</sub> | Speedup | Change in Speedup |
-> |---------------|-----------|---------------|-------------------|
+> |-----------|---------------|---------|-------------------|
 > | 1         | 3.99667       |         |                   |
 > | 2         |               |         |                   |
 > | 4         |               |         |                   |
-> | ...         |               |         |                   |
-> | 4096         |               |         |                   |
->
-> > ## Solution
-> > Hopefully from your results you will find that we can get close to the maximum speedup of 25, but it requires ever more resources.
-> {: .solution}
-{: .challenge}
-
-> ## Speedup Change?
+> | ...       |               |         |                   |
+> | 4096      |               |         |                   |
 >
 > When does the change in speedup drop below 1%?
 >
 > > ## Solution
-> > From our own trial runs this happens at 4096 core, but it is expected that we would never run this code at these core counts as it would be a waste of resources.
-> {: .solution}
+> > Hopefully from your results you will find that we can get close to the maximum speedup calculated earlier, but it requires ever more resources. From our own trial runs, we expect the speedup to drop below 1% at 4096 cores, but it is expected that we would never run this code at these core counts as it would be a waste of resources.
+>{: .solution}
+> 
 {: .challenge}
+
 
 > ## How Many Cores Should we Use?
 >
@@ -164,14 +170,15 @@ And in our case:
 >
 > > ## Solution
 > >
-> > Within DiRAC we do not impose such a limit, this would be a decision made by the researchers. Every project has an allocation and it is up to you to decide what is efficient use of your allocation. In this case I personally would not waste my allocation on any runs over 128 cores.
-> {: .solution}
+> > Within DiRAC we do not impose such a limit, this is a decision made by you. Every project has an allocation and it is up to you to decide what is efficient use of your allocation. In this case I personally would not waste my allocation on any runs over 128 cores.
+>{: .solution}
+> 
 {: .challenge}
 
 
 ## Calculating a Weak Scaling Profile
 
-Not all codes are suited to strong scaling. As seen in the previous example, even codes with as much as 96% parallelizable code will hit limits. Can we do something to enable moderately parallelizable codes to access the power of HPC systems? The answer is yes, and is known as *weak scaling*.
+Not all codes are suited to strong scaling. As seen in the previous example, even codes with as much as 96% parallelizable code will hit limits. Can we do something to enable moderately parallelizable codes to access the power of HPC systems? The answer is yes, and is demonstrated through *weak scaling*.
 
 The problem with strong scaling is as we increase the number of cores, then the relative size of the parallel portion of our task reduces until it is negligible, and then we can not go any further. The solution is to increase the problem size as you increase the core count -- this is [Gustafson's law](https://en.wikipedia.org/wiki/Gustafson%27s_law). This method tries to keep the proportion of serial time and parallel time the same. We will not get the benefit of reduced time for our calculation, but we will have the benefit of processing more data. Below is a re-run of our π code. But this time, as we increase the cores we also increase the samples used to calculate π.
 
@@ -204,7 +211,8 @@ The above plot shows that the code is highly scalable. We do have an anomaly wit
 > > ## Solution
 > >
 > > The obvious answer is to do more runs with higher core counts, and also try to resolve the *n = 4* sample. This should give you a clearer picture of the weak scaling profile.
-> {: .solution}
+>{: .solution}
+> 
 {: .challenge}
 
 > ## Obtaining Resources to Profile your Code
