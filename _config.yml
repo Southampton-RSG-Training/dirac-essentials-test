@@ -52,12 +52,6 @@ lessons:
     branch: main
     order: 1
 
-#  - title: "Bash Shell: Writing Basic Scripts"
-#    gh-name: dirac-bash-writing-scripts
-#    type: episode
-#    branch: main
-#    order: 2
-
   - title: "Version Control with Git"
     gh-name: dirac-version-control
     type: episode
@@ -67,7 +61,7 @@ lessons:
   - title: "Principles of Software Engineering"
     gh-name: dirac-software-engineering
     type: episode
-    branch: pip-example
+    branch: main
     order: 3
 
   - title: "Testing, Documenting, and Reviewing Code"
