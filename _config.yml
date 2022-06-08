@@ -52,35 +52,35 @@ lessons:
     branch: main
     order: 1
 
-  - title: "Bash Shell: Writing Basic Scripts"
-    gh-name: dirac-bash-writing-scripts
-    type: episode
-    branch: main
-    order: 2
+#  - title: "Bash Shell: Writing Basic Scripts"
+#    gh-name: dirac-bash-writing-scripts
+#    type: episode
+#    branch: main
+#    order: 2
 
   - title: "Version Control with Git"
     gh-name: dirac-version-control
     type: episode
     branch: main
-    order: 3
+    order: 2
 
   - title: "Principles of Software Engineering"
     gh-name: dirac-software-engineering
     type: episode
     branch: pip-example
-    order: 4
+    order: 3
 
   - title: "Testing, Documenting, and Reviewing Code"
     gh-name: dirac-test-document-review
     type: episode
     branch: main
-    order: 5
+    order: 4
 
   - title: "Principles of Codes Scaling"
     gh-name: dirac-code-scaling
     type: episode
     branch: main
-    order: 6
+    order: 5
 
 # Specify that things in the episodes collection should be output.
 collections:

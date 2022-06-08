@@ -147,7 +147,6 @@ Display the contact email address set in the configuration file.
 
 <hr/>
 
-<!--
 {% comment %}
 CODE OF CONDUCT
 {% endcomment %}
@@ -163,7 +162,6 @@ Everyone who participates in Carpentries activities is required to conform to th
   </a>
 </p>
 <hr/>
--->
 
 <!--
 {% comment %}
@@ -171,8 +169,8 @@ SURVEYS - DO NOT EDIT SURVEY LINKS
 {% endcomment %}
 <h2 id="surveys">Surveys</h2>
 <p>Please be sure to complete these surveys before and after the workshop.</p>
-<p><a href="{{ site.pre_survey }}{{ site.github.project_title }}">Pre-workshop Survey</a></p>
-<p><a href="{{ site.post_survey }}{{ site.github.project_title }}">Post-workshop Survey</a></p>
+<p><a href="{{ site.pre_survey }}">Pre-workshop Survey</a></p>
+<p><a href="{{ site.post_survey }}">Post-workshop Survey</a></p>
 <hr/>
 -->
 

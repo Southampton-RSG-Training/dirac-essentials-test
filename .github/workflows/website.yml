@@ -22,7 +22,9 @@ jobs:
         #   fetch-depth: 0
 
       - name: Install sys deps
-        run: sudo apt-get install -y libcurl4-openssl-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev
 
       - name: Setup Git
         if: ${{ !env.ACT }}
