@@ -147,6 +147,7 @@ Display the contact email address set in the configuration file.
 
 <hr/>
 
+<!--
 {% comment %}
 CODE OF CONDUCT
 {% endcomment %}
@@ -162,6 +163,7 @@ Everyone who participates in Carpentries activities is required to conform to th
   </a>
 </p>
 <hr/>
+-->
 
 <!--
 {% comment %}
