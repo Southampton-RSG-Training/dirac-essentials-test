@@ -10,7 +10,7 @@ It will also make you much more employable. Real programming and IT skills are m
 </p>
 
 <p id="overview-aims">
-  <strong>Course Aims:</strong>
+  <strong>Course Aims: </strong>
 
   Introduce the student to Unix environment and its computing tools, including file management systems and editors.                           	                                                                       
 </p>
