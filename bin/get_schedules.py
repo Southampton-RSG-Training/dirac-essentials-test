@@ -103,7 +103,7 @@ def get_time_object(time_string):
 
     return time
 
-def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
+def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time, lesson_title):
     """Create a detailed lesson schedule landing page for each lesson.
 
     The schedule is based on a modifed version of syllabus.html to work better
@@ -118,6 +118,8 @@ def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
         The type of lesson.
     start_time: str
         The start time of the lesson.
+    lesson_title: str
+        The title of the lesson.
     """
     file_ext = "md"
     containing_directory = f"collections/_episodes/{lesson_name}-lesson"
@@ -128,6 +130,8 @@ def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time):
         filepath.rename(f"{containing_directory}/{new_file_name}")
 
     schedule_markdown = textwrap.dedent(f"""---
+    lesson_title: {lesson_title}
+    lesson_schedule_slug: {lesson_name}-schedule
     title: Lesson Schedule
     slug: {lesson_name}-schedule
     layout: schedule
