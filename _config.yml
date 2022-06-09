@@ -46,7 +46,7 @@ helper:
 
 # Details about the lessons
 lessons:
-  - title: "Bash Shell: Using the Command Line"
+  - title: "Bash Shell Using the Command Line"
     gh-name: dirac-bash-command-line
     type: episode
     branch: main

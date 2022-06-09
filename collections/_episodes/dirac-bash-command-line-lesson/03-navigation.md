@@ -1,5 +1,5 @@
 ---
-lesson_title: Bash Shell: Using the Command Line
+lesson_title: Bash Shell Using the Command Line
 lesson_schedule_slug: dirac-bash-command-line-schedule
 title: "Moving around and looking at things"
 slug: dirac-bash-command-line-moving-around-looking-things
