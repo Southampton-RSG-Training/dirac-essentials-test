@@ -20,7 +20,7 @@ with open('_config.yml') as config:
 # get list of setup.md chunks from _config.yml and apply order to them
 # Open the website config, which contains a list of the lessons we want in the
 # workshop, then create the directory "submodules" which will contain the files
-# for each lesson
+# for each lesson.
 set_up_docs = []
 for n, lesson_info in enumerate(website_config['lessons']):
     with open(f'submodules/{lesson_info.get("gh-name")}/_config.yml') as config:
