@@ -510,3 +510,4 @@ Mandatory arguments to long options are mandatory for short options too.
 > {: .solution}
 {: .challenge}
 
+{% include links.md %}

@@ -131,3 +131,5 @@ servers. It's become so essential that Microsoft now [ships it as part of
 Windows](https://www.microsoft.com/en-us/store/p/ubuntu/9nblggh4msv6)! Knowing
 how to use Bash and HPC systems will allow you to operate virtually any modern
 device. With all of this in mind, let's connect to a cluster and get started!
+
+{% include links.md %}

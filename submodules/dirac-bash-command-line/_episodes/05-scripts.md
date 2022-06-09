@@ -514,3 +514,5 @@ gene_association.fb.gz
 > > all (third position).
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

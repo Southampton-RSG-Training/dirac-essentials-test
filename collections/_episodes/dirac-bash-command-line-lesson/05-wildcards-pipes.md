@@ -388,3 +388,5 @@ the number of lines from that file.
 > > The `head` command without any options shows the first 10 lines of a file.
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

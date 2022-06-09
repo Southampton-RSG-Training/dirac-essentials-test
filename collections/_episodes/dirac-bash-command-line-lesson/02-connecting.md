@@ -357,3 +357,5 @@ convention:
 > you see a change from `[local]$` to `{{ site.workshop_host_prompt }}` and
 > disconnect when you see the reverse.
 {: .callout}
+
+{% include links.md %}
