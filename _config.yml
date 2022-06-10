@@ -46,7 +46,7 @@ helper:
 
 # Details about the lessons
 lessons:
-  - title: "Bash Shell Using the Command Line"
+  - title: "Bash Shell: Using the Command Line"
     gh-name: dirac-bash-command-line
     type: episode
     branch: main
@@ -81,9 +81,6 @@ collections:
   episodes:
     output: true
     permalink: /:slug
-  extras:
-    output: true
-    permalink: /:path/index
 collections_dir: collections
 
 include:

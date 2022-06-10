@@ -130,7 +130,7 @@ def create_detailed_lesson_schedules(lesson_name, lesson_type, start_time, lesso
         filepath.rename(f"{containing_directory}/{new_file_name}")
 
     schedule_markdown = textwrap.dedent(f"""---
-    lesson_title: {lesson_title}
+    lesson_title: '{lesson_title}'
     lesson_schedule_slug: {lesson_name}-schedule
     title: Lesson Schedule
     slug: {lesson_name}-schedule
@@ -280,9 +280,9 @@ def main():
                 # each original entry, and add the schedule table to the html template
 
                 if len(all_schedules) > 1:
-                    title = f"Day {i + 1}: {lesson_title}"
+                    title = f"Day {i + 1}: '{lesson_title}'"
                 else:
-                    title = lesson_title
+                    title = f"'{lesson_title}'"
 
                 table = f"""
                 <div class="col-md-6">

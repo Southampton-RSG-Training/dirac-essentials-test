@@ -115,7 +115,7 @@ specific to languages will be listed in the appropriate section(s) below.
                 line = "#" * nhashes + line.lstrip("#")
                 content[i] = line
 
-        setup_md_string += "\n### {}\n\n{}\n".format(lesson["title"], "\n".join(content))
+        setup_md_string += "\n### '{}'\n\n{}\n".format(lesson["title"], "\n".join(content))
 
     # write out the new setup.md file to the root directory
 
