@@ -1,5 +1,5 @@
 ---
-lesson_title: Testing, Documenting, and Reviewing Code
+lesson_title: 'Testing, Documenting, and Reviewing Code'
 lesson_schedule_slug: dirac-test-document-review-schedule
 title: "Reviewing Code"
 slug: dirac-test-document-review-reviewing-code

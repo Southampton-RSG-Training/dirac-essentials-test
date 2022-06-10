@@ -1,5 +1,5 @@
 ---
-lesson_title: Principles of Codes Scaling
+lesson_title: 'Principles of Codes Scaling'
 lesson_schedule_slug: dirac-code-scaling-schedule
 title: Lesson Schedule
 slug: dirac-code-scaling-schedule

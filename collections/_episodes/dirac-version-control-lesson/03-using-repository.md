@@ -1,5 +1,5 @@
 ---
-lesson_title: Version Control with Git
+lesson_title: 'Version Control with Git'
 lesson_schedule_slug: dirac-version-control-schedule
 title: "Using a Repository"
 slug: dirac-version-control-using-repository

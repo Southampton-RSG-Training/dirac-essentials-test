@@ -1,5 +1,5 @@
 ---
-lesson_title: Principles of Software Engineering
+lesson_title: 'Principles of Software Engineering'
 lesson_schedule_slug: dirac-software-engineering-schedule
 title: "An Introduction to Python"
 slug: dirac-software-engineering-brief-intro-python

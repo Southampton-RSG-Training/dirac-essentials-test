@@ -1,5 +1,5 @@
 ---
-lesson_title: Bash Shell Using the Command Line
+lesson_title: 'Bash Shell: Using the Command Line'
 lesson_schedule_slug: dirac-bash-command-line-schedule
 title: "Scripts, variables, and loops"
 slug: dirac-bash-command-line-scripts-variables-loops

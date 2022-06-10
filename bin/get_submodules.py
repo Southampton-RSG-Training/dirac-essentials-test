@@ -122,7 +122,7 @@ for n, lesson_info in enumerate(website_config['lessons']):
                 with open(f"{dest}/{file}", "r") as f:
                     contents = f.readlines()
 
-                contents.insert(1, f"lesson_title: {lesson_info.get('title', '')}\n"
+                contents.insert(1, f"lesson_title: '{lesson_info.get('title', '')}'\n"
                                    f"lesson_schedule_slug: {lesson_name}-schedule\n")
 
                 with open(f"{dest}/{file}", "w") as f:
